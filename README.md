@@ -218,7 +218,7 @@
     line-height: 1.5;
   }
   
-  /* Inline Video Container - Replaced iframe with native HTML5 video player */
+  /* Inline Video Container */
   .video-container-outer {
     position: relative;
     width: 100%;
@@ -252,7 +252,6 @@
       border: none;
     }
     .screen {
-      /* Dramatically increased bottom padding to 150px to clear Tiiny.host banner */
       padding: 20px 15px 150px 15px; 
     }
     h1 { font-size: 1.6rem; margin-bottom: 10px; }
@@ -288,7 +287,7 @@
     <div class="video-container-outer">
       <!-- HTML5 Inline Intro Video -->
       <video id="intro-video" playsinline loop preload="auto">
-        <source id="intro-video-source" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
+        <source id="intro-video-source" src="" type="video/mp4">
         Your browser does not support inline video.
       </video>
     </div>
@@ -347,8 +346,8 @@
 </div>
 
 <script>
-  // Replace these MP4 URLs with your direct hosted video links (.mp4 or .webm)
-  const introVideoSrc = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4";
+  // Direct Raw GitHub Media Stream URLs
+  const introVideoSrc = "https://raw.githubusercontent.com/writetoms/h2s/main/Intro.mp4";
 
   const quizData = [
     {
@@ -359,7 +358,7 @@
         { text: "Alert Ahmad and check your personal H2S monitor.", isCorrect: true }
       ],
       explanation: "A sudden loss of the 'rotten egg' smell can indicate olfactory fatigue, a sign of high H2S concentrations. You must immediately check your monitor and alert your team.",
-      videoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+      videoSrc: "https://raw.githubusercontent.com/writetoms/h2s/main/Q1.mp4"
     },
     {
       question: "Alarm Trigger (Sec 3.2) The personal alarm vibrates and flashes red (>10 ppm). Ahmad signals an emergency. What do you do next?",
@@ -369,7 +368,7 @@
         { text: "Go don an EEBA mask before attempting to communicate or leave site.", isCorrect: true }
       ],
       explanation: "When an H2S alarm triggers, your immediate priority is to don your Emergency Escape Breathing Apparatus (EEBA) to protect your airway before taking any other action.",
-      videoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+      videoSrc: "https://raw.githubusercontent.com/writetoms/h2s/main/Q2.mp4"
     },
     {
       question: "Pre-Inspection (Sec 5.2) In the equipment shed, you select an Emergency Escape Breathing Apparatus (EEBA). What is your first step?",
@@ -379,7 +378,7 @@
         { text: "Ensure cylinder airflow valve opens easily by turning it twice.", isCorrect: false }
       ],
       explanation: "Before deployment, you must verify the cylinder is full by ensuring the pressure gauge is within 10% of its maximum operating pressure.",
-      videoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+      videoSrc: "https://raw.githubusercontent.com/writetoms/h2s/main/Q3.mp4"
     },
     {
       question: "Wind Evaluation (Sec 3.2) Mask on and breathing. You glance at the rig windsock. It is blowing directly toward the North. What do you do next?",
@@ -389,7 +388,7 @@
         { text: "Evacuate toward the South or Crosswind (East/West).", isCorrect: true }
       ],
       explanation: "Never run downwind with the gas. Always evacuate upwind or crosswind away from the hazard to escape the gas plume safely.",
-      videoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+      videoSrc: "https://raw.githubusercontent.com/writetoms/h2s/main/Q4.mp4"
     },
     {
       question: "Assembly Point (Sec 3.2) You reach the designated Safe Briefing Area (SBA). What is your immediate priority upon arriving?",
@@ -399,7 +398,7 @@
         { text: "Take off your EEBA mask immediately since you reached the SBA.", isCorrect: false }
       ],
       explanation: "Upon reaching the Safe Briefing Area, your first priority is to report for a headcount while keeping your respiratory protection on until the official all-clear is given.",
-      videoSrc: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+      videoSrc: "https://raw.githubusercontent.com/writetoms/h2s/main/Q5.mp4"
     }
   ];
 
@@ -407,7 +406,6 @@
   let currentQuestionIndex = 0;
   let timeLeft = TIME_LIMIT;
   let timerInterval;
-  let userInteracted = false;
 
   const timerFill = document.getElementById('timer-fill');
   const timerText = document.getElementById('timer-text');
@@ -424,25 +422,24 @@
   
   const btnNextQuestion = document.getElementById('btn-next-question');
 
-  // Helper function to safely play inline video with audio enabled (Method 1)
+  // Helper function to play inline video with audio enabled (Method 1)
   function playVideoWithAudio(videoElement) {
     if (!videoElement) return;
     
-    videoElement.muted = false; // Enable clip's embedded audio
+    videoElement.muted = false; // Enable native audio
     
     let playPromise = videoElement.play();
     if (playPromise !== undefined) {
       playPromise.catch(error => {
-        console.warn("Autoplay with audio was restricted. Playing muted fallback:", error);
+        console.warn("Autoplay with audio blocked; falling back to muted play:", error);
         videoElement.muted = true;
         videoElement.play();
       });
     }
   }
 
-  // Initial user gesture handler to unlock audio across mobile browsers
+  // Initial gesture trigger to enable audio playback
   function initiateAudioAndProceed(targetScreen) {
-    userInteracted = true;
     goToScreen(targetScreen);
   }
 
@@ -450,7 +447,7 @@
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
     
-    // Pause inactive videos
+    // Manage video playback based on active screen
     if (screenId !== 'screen-intro-2') {
       introVideo.pause();
     } else {
@@ -524,7 +521,7 @@
 
     fExplanation.innerHTML = `<strong>Explanation:</strong> ${data.explanation}`;
     
-    // Set feedback video source and play
+    // Set feedback video source and trigger play with audio
     fVideoSource.src = data.videoSrc;
     fVideo.load();
     playVideoWithAudio(fVideo);
