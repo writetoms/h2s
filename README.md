@@ -399,7 +399,7 @@
   const quizData = [
     {
       question: "Hazard Detection (Sec 1.4) Walking past a low-lying cellar pit, you smell a faint 'rotten egg' smell that suddenly disappears, but no stationary alarm sounds yet. What do you do next?",
-      imageSrc: "Gemini_Generated_Image_ioph6rioph6rioph.png",
+      imageSrc: "Q1.png",
       choices: [
         { text: "Keep working; if the smell is gone, the gas has dispersed.", isCorrect: false },
         { text: "Alert Ahmad and check your personal H2S monitor.", isCorrect: true }
@@ -409,7 +409,7 @@
     },
     {
       question: "Alarm Trigger (Sec 3.2) The personal alarm vibrates and flashes red (>10 ppm). Ahmad signals an emergency. What do you do next?",
-      imageSrc: "https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageSrc: "Q2.png",
       choices: [
         { text: "Run quickly toward the office trailer to read the central gas monitor board.", isCorrect: false },
         { text: "Go don an EEBA mask before attempting to communicate or leave site.", isCorrect: true }
@@ -419,7 +419,7 @@
     },
     {
       question: "Pre-Inspection (Sec 5.2) In the equipment shed, you select an Emergency Escape Breathing Apparatus (EEBA). What is your first step?",
-      imageSrc: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageSrc: "Q3.png",
       choices: [
         { text: "Ensure pressure gauge reading is within 10% of maximum operating pressure.", isCorrect: true },
         { text: "Ensure cylinder airflow valve opens easily by turning it twice.", isCorrect: false }
@@ -429,7 +429,7 @@
     },
     {
       question: "Wind Evaluation (Sec 3.2) Mask on and breathing. You glance at the rig windsock. It is blowing directly toward the North. What do you do next?",
-      imageSrc: "https://images.unsplash.com/photo-1584483584860-24410a562854?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageSrc: "Q4.png",
       choices: [
         { text: "Evacuate toward the North (downwind).", isCorrect: false },
         { text: "Evacuate toward the South or Crosswind (East/West).", isCorrect: true }
@@ -439,7 +439,7 @@
     },
     {
       question: "Assembly Point (Sec 3.2) You reach the designated Safe Briefing Area (SBA). What is your immediate priority upon arriving?",
-      imageSrc: "https://images.unsplash.com/photo-1508344928928-7472b639b2ae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageSrc: "Q5.png",
       choices: [
         { text: "Report to the Muster Captain for headcount and remain in the SBA.", isCorrect: true },
         { text: "Take off your EEBA mask immediately since you reached the SBA.", isCorrect: false }
