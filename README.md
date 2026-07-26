@@ -200,7 +200,7 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 
-  /* Answer Tiles */
+  /* H2S Answer Tiles */
   .tiles-container {
     display: flex;
     flex-direction: column;
@@ -272,6 +272,50 @@
     padding: 0;
   }
 
+  /* Code of Conduct Quiz Styles */
+  .coc-question-block {
+    margin-bottom: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .coc-question-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: #fff;
+  }
+  .form-tile {
+    background-color: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    cursor: pointer;
+    text-align: left;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+  }
+  .form-tile:hover {
+    border-color: var(--gradient-bottom);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 107, 143, 0.2);
+  }
+  .form-tile input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--gradient-bottom);
+    cursor: pointer;
+  }
+
   /* --- MOBILE RESPONSIVENESS --- */
   @media (max-width: 480px) {
     body {
@@ -308,11 +352,37 @@
   <div id="screen-intro-1" class="screen active">
     <div style="margin: auto 0;">
       <div class="masthead-badge">H2S Awareness</div>
+      
+      <!-- New Code of Conduct Hyperlink & Quiz Button -->
+      <a href="https://canva.link/v2huqz1m7d1xx9u" target="_blank" style="display:block; margin-bottom:10px; color:#a3e635; font-weight:700; text-decoration:underline; font-size:1.15rem; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">HPSI Code of Conduct Course</a>
+      <button class="btn-primary" style="margin-bottom: 30px; padding: 12px 18px; font-size: 1rem; width: auto;" onclick="goToScreen('screen-coc-quiz')">Code of Conduct Quiz</button>
+
       <h1>H2S Safety in Practice</h1>
       <p>Test applying your knowledge of emergency procedures in an H2S crisis situation. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
     </div>
-    <button class="btn-primary" onclick="initiateAudioAndProceed('screen-background')">Next Step</button>
+    <button class="btn-primary" onclick="initiateAudioAndProceed('screen-background')">Next Step (H2S Sim)</button>
   </div>
+
+  <!-- CODE OF CONDUCT QUIZ SCREEN -->
+  <div id="screen-coc-quiz" class="screen">
+    <h1>Code of Conduct</h1>
+    <div class="content-scroll" id="coc-quiz-container" style="max-height: 400px; margin-bottom: 20px;">
+      <!-- Populated by JS -->
+    </div>
+    <button class="btn-primary" onclick="submitCocQuiz()">Submit Answers</button>
+    <button class="btn-primary" style="background: rgba(255,255,255,0.2); margin-top: 10px;" onclick="resetCocQuiz()">Back to Home</button>
+  </div>
+
+  <!-- CODE OF CONDUCT RESULTS SCREEN -->
+  <div id="screen-coc-result" class="screen">
+    <div style="margin: auto 0; text-align: center;">
+      <h1 id="coc-res-title"></h1>
+      <p id="coc-res-score" style="font-size: 1.3rem; font-weight: 700; color: #fff;"></p>
+      <p id="coc-res-msg"></p>
+    </div>
+    <button class="btn-primary" onclick="resetCocQuiz()">Return Home</button>
+  </div>
+
 
   <!-- SCREEN 2: Background -->
   <div id="screen-background" class="screen">
@@ -393,7 +463,78 @@
 </div>
 
 <script>
-  // Relative paths for native GitHub Pages streaming & zero CORS issues
+  // --- CODE OF CONDUCT QUIZ DATA ---
+  const cocQuizData = [
+    {
+      type: "radio",
+      question: "1. True or False: Managers are responsible for communicating, promoting, and monitoring compliance with the requirements of this Code of Conduct within their area of responsibility.",
+      options: ["True", "False"],
+      correctAnswers: ["True"]
+    },
+    {
+      type: "radio",
+      question: "2. True or False: Failure to read this Code of Conduct or sign the acknowledgment form does not excuse an HPSI employee from compliance with this Code of Conduct.",
+      options: ["True", "False"],
+      correctAnswers: ["True"]
+    },
+    {
+      type: "checkbox",
+      question: "3. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
+      options: [
+        "Booking flights", 
+        "Safeguarding all personal data", 
+        "Respecting human and labor rights", 
+        "Avoiding conflicts of interest", 
+        "Planning social gatherings", 
+        "Following export controls and sanctions"
+      ],
+      correctAnswers: [
+        "Safeguarding all personal data", 
+        "Respecting human and labor rights", 
+        "Avoiding conflicts of interest", 
+        "Following export controls and sanctions"
+      ]
+    },
+    {
+      type: "checkbox",
+      question: "4. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
+      options: [
+        "Avoiding insider trading and money laundering", 
+        "Mailing holiday cards", 
+        "Abiding by fair competition practices", 
+        "Avoiding gifts that could mean undue business influence", 
+        "Safeguarding company property and information", 
+        "Participating in prize raffles"
+      ],
+      correctAnswers: [
+        "Avoiding insider trading and money laundering", 
+        "Abiding by fair competition practices", 
+        "Avoiding gifts that could mean undue business influence", 
+        "Safeguarding company property and information"
+      ]
+    },
+    {
+      type: "checkbox",
+      question: "5. Choose all answers that were mentioned (more than one) Your duties as an employee include:",
+      options: [
+        "Good judgement", 
+        "Care", 
+        "Charisma", 
+        "Consideration", 
+        "Familiarity with your duties", 
+        "Performing your duties"
+      ],
+      correctAnswers: [
+        "Good judgement", 
+        "Care", 
+        "Consideration", 
+        "Familiarity with your duties", 
+        "Performing your duties"
+      ]
+    }
+  ];
+
+  // --- H2S SIMULATION DATA ---
   const introVideoSrc = "Intro.mp4";
 
   const quizData = [
@@ -449,6 +590,7 @@
     }
   ];
 
+  // --- GLOBAL STATE ---
   const TIME_LIMIT = 20;
   let currentQuestionIndex = 0;
   let timeLeft = TIME_LIMIT;
@@ -469,12 +611,96 @@
   
   const btnNextQuestion = document.getElementById('btn-next-question');
 
-  // Helper function to safely play inline video with audio enabled (Method 1)
+
+  // --- CODE OF CONDUCT QUIZ LOGIC ---
+  function buildCocQuiz() {
+    const container = document.getElementById('coc-quiz-container');
+    container.innerHTML = '';
+    cocQuizData.forEach((q, qIndex) => {
+      const block = document.createElement('div');
+      block.className = 'coc-question-block';
+      
+      const qTextElement = document.createElement('div');
+      qTextElement.className = 'coc-question-text';
+      qTextElement.innerText = q.question;
+      block.appendChild(qTextElement);
+
+      q.options.forEach((opt) => {
+        const label = document.createElement('label');
+        label.className = 'form-tile';
+        
+        const input = document.createElement('input');
+        input.type = q.type;
+        input.name = `coc_q_${qIndex}`;
+        input.value = opt;
+        
+        const span = document.createElement('span');
+        span.innerText = opt;
+        
+        label.appendChild(input);
+        label.appendChild(span);
+        block.appendChild(label);
+      });
+      container.appendChild(block);
+    });
+  }
+
+  function submitCocQuiz() {
+    let score = 0;
+    let allAnswered = true;
+
+    cocQuizData.forEach((q, qIndex) => {
+      const inputs = document.querySelectorAll(`input[name="coc_q_${qIndex}"]:checked`);
+      if (inputs.length === 0) {
+        allAnswered = false;
+      }
+      
+      const selectedValues = Array.from(inputs).map(inp => inp.value);
+      
+      if (q.type === 'radio') {
+        if (selectedValues[0] === q.correctAnswers[0]) {
+          score++;
+        }
+      } else if (q.type === 'checkbox') {
+        // Must match exact length and exactly the right answers to get a point
+        const isCorrect = selectedValues.length === q.correctAnswers.length && 
+                          selectedValues.every(val => q.correctAnswers.includes(val));
+        if (isCorrect) score++;
+      }
+    });
+
+    if (!allAnswered) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
+    const title = document.getElementById('coc-res-title');
+    const scoreText = document.getElementById('coc-res-score');
+    const msg = document.getElementById('coc-res-msg');
+
+    scoreText.innerText = `Score: ${score} / 5`;
+    if (score >= 4) {
+      title.innerText = "Passed!";
+      title.style.color = '#a3e635'; 
+      msg.innerText = "Congratulations, you have passed the Code of Conduct Quiz.";
+    } else {
+      title.innerText = "Failed";
+      title.style.color = '#ff4d4d'; 
+      msg.innerText = "You did not achieve the minimum passing score of 4/5. Please review the material and try again.";
+    }
+
+    goToScreen('screen-coc-result');
+  }
+
+  function resetCocQuiz() {
+    document.querySelectorAll('input[name^="coc_q_"]').forEach(inp => inp.checked = false);
+    goToScreen('screen-intro-1');
+  }
+
+  // --- H2S SIMULATION LOGIC ---
   function playVideoWithAudio(videoElement) {
     if (!videoElement) return;
-    
-    videoElement.muted = false; // Enable clip's embedded audio
-    
+    videoElement.muted = false; 
     let playPromise = videoElement.play();
     if (playPromise !== undefined) {
       playPromise.catch(error => {
@@ -485,7 +711,6 @@
     }
   }
 
-  // Initial user gesture handler to unlock audio across mobile browsers
   function initiateAudioAndProceed(targetScreen) {
     goToScreen(targetScreen);
   }
@@ -569,7 +794,6 @@
 
     fExplanation.innerHTML = `<strong>Explanation:</strong> ${data.explanation}`;
     
-    // Load and play feedback video with audio
     fVideoSource.src = data.videoSrc;
     fVideo.load();
     playVideoWithAudio(fVideo);
@@ -590,6 +814,10 @@
       startQuestion(currentQuestionIndex + 2); 
     }
   }
+
+  // Initialize Code of Conduct Quiz DOM elements
+  buildCocQuiz();
+
 </script>
 </body>
 </html>
