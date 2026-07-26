@@ -314,7 +314,7 @@
     <button class="btn-primary" onclick="initiateAudioAndProceed('screen-background')">Next Step</button>
   </div>
 
-  <!-- NEW SCREEN: Background -->
+  <!-- SCREEN 2: Background -->
   <div id="screen-background" class="screen">
     <h1>Background</h1>
     <div class="content-scroll">
@@ -327,17 +327,18 @@
     <button class="btn-primary" onclick="goToScreen('screen-intro-2')">Continue to Briefing</button>
   </div>
 
-  <!-- INTRO SCREEN 2: Video Briefing -->
+  <!-- INTRO SCREEN 3: Video Briefing -->
   <div id="screen-intro-2" class="screen">
     <h1>Mission Briefing</h1>
     <div class="video-container-outer">
-      <!-- HTML5 Inline Intro Video -->
-      <video id="intro-video" playsinline loop preload="auto">
+      <!-- HTML5 Inline Intro Video (No Loop) -->
+      <video id="intro-video" playsinline preload="auto">
         <source id="intro-video-source" src="" type="video/mp4">
         Your browser does not support inline video.
       </video>
     </div>
-    <p>Watch the briefing carefully. Click below when you are ready to begin the timer for Question 1.</p>
+    <p>You are about to enter an H2S emergency situation at an Aramco facility! Use the knowledge you gained about H2S Safety Awareness to help you stay safe! This will require you to focus, think fast, and be sure of the protocols.</p>
+    <p style="margin-bottom: 0;">Click below when you are ready to begin the timer for Question 1.</p>
     <button class="btn-primary" onclick="startQuestion(1)">Start Quiz</button>
   </div>
 
@@ -370,8 +371,8 @@
     </div>
 
     <div class="video-container-outer">
-      <!-- HTML5 Inline Feedback Video -->
-      <video id="f-video" playsinline loop preload="auto">
+      <!-- HTML5 Inline Feedback Video (No Loop) -->
+      <video id="f-video" playsinline preload="auto">
         <source id="f-video-source" src="" type="video/mp4">
         Your browser does not support inline video.
       </video>
@@ -398,12 +399,12 @@
   const quizData = [
     {
       question: "Hazard Detection (Sec 1.4) Walking past a low-lying cellar pit, you smell a faint 'rotten egg' smell that suddenly disappears, but no stationary alarm sounds yet. What do you do next?",
-      imageSrc: "https://images.unsplash.com/photo-1584483754854-4696041ec1c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      imageSrc: "Gemini_Generated_Image_ioph6rioph6rioph.png",
       choices: [
         { text: "Keep working; if the smell is gone, the gas has dispersed.", isCorrect: false },
         { text: "Alert Ahmad and check your personal H2S monitor.", isCorrect: true }
       ],
-      explanation: "A sudden loss of the 'rotten egg' smell can indicate olfactory fatigue, a sign of high H2S concentrations. You must immediately check your monitor and alert your team.",
+      explanation: "A sudden loss of the 'rotten egg' smell can indicate olfactory fatigue (loss of smell), a sign of high H2S concentrations. You must immediately check your monitor and alert your team.",
       videoSrc: "Q1.mp4"
     },
     {
