@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H2S Safety & Protocol Quiz</title>
+<title>H2S Safety in Practice</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -90,7 +90,23 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Typography */
+  /* Typography & Badges */
+  .masthead-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 18px;
+    width: fit-content;
+    backdrop-filter: blur(5px);
+  }
+
   h1 { font-size: 2rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.5px; line-height: 1.1; }
   p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 35px 0; font-weight: 300; }
   
@@ -275,8 +291,9 @@
   <!-- INTRO SCREEN 1: Welcome -->
   <div id="screen-intro-1" class="screen active">
     <div style="margin: auto 0;">
-      <h1>Safety Protocol Challenge</h1>
-      <p>Test your knowledge of emergency procedures. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
+      <div class="masthead-badge">H2S Awareness</div>
+      <h1>H2S Safety in Practice</h1>
+      <p>Test applying your knowledge of emergency procedures in an H2S crisis situation. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
     </div>
     <button class="btn-primary" onclick="initiateAudioAndProceed('screen-intro-2')">Next Step</button>
   </div>
