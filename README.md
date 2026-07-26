@@ -108,8 +108,23 @@
   }
 
   h1 { font-size: 2rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.5px; line-height: 1.1; }
-  p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 35px 0; font-weight: 300; }
+  p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 20px 0; font-weight: 300; }
   
+  /* Background Screen Content Styling */
+  .content-scroll {
+    overflow-y: auto;
+    max-height: 440px;
+    padding-right: 5px;
+    margin-bottom: 20px;
+  }
+  .content-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .content-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
   /* Primary Buttons */
   .btn-primary {
     background: var(--button-bg);
@@ -271,7 +286,8 @@
       padding: 20px 15px 150px 15px; 
     }
     h1 { font-size: 1.6rem; margin-bottom: 10px; }
-    p { font-size: 0.95rem; margin-bottom: 20px; }
+    p { font-size: 0.95rem; margin-bottom: 15px; }
+    .content-scroll { max-height: 380px; }
     .timer-container { margin-bottom: 15px; }
     .question-image-container { height: 140px; margin-bottom: 15px; border-radius: 12px; }
     .question-text-area { font-size: 1.05rem; margin-bottom: 15px; }
@@ -295,10 +311,23 @@
       <h1>H2S Safety in Practice</h1>
       <p>Test applying your knowledge of emergency procedures in an H2S crisis situation. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
     </div>
-    <button class="btn-primary" onclick="initiateAudioAndProceed('screen-intro-2')">Next Step</button>
+    <button class="btn-primary" onclick="initiateAudioAndProceed('screen-background')">Next Step</button>
   </div>
 
-  <!-- INTRO SCREEN 2: Video -->
+  <!-- NEW SCREEN: Background -->
+  <div id="screen-background" class="screen">
+    <h1>Background</h1>
+    <div class="content-scroll">
+      <p><strong>Objective:</strong> To evaluate how the participants will apply the gained knowledge of H2S safety in realistic scenarios before completing the training.</p>
+      
+      <p>This is a short, performance-based module designed to be learner-centered and highly interactive. It incorporates learner engagement elements such as decision-making scenarios and simulation-styled assessment of learners' knowledge.</p>
+      
+      <p>This was a very tech-driven design process: it involved using Veo 3.1 for ai video generation, Gemini 3.6 for ai image generation and webapp design and debugging, and Github for web hosting--using completely new workflows. The content design employed (among others) genuine Saudi Aramco H2S Awareness learning text from the open web.</p>
+    </div>
+    <button class="btn-primary" onclick="goToScreen('screen-intro-2')">Continue to Briefing</button>
+  </div>
+
+  <!-- INTRO SCREEN 2: Video Briefing -->
   <div id="screen-intro-2" class="screen">
     <h1>Mission Briefing</h1>
     <div class="video-container-outer">
