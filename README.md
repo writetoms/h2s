@@ -415,7 +415,7 @@
         { text: "Go don an EEBA mask before attempting to communicate or leave site.", isCorrect: true }
       ],
       explanation: "When an H2S alarm triggers, your immediate priority is to don your Emergency Escape Breathing Apparatus (EEBA) to protect your airway before taking any other action.",
-      videoSrc: "Q3.mp4"
+      videoSrc: "Q2.mp4"
     },
     {
       question: "Pre-Inspection (Sec 5.2) In the equipment shed, you select an Emergency Escape Breathing Apparatus (EEBA). What is your first step?",
