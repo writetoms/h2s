@@ -90,7 +90,23 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Typography */
+  /* Typography & Badges */
+  .masthead-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin-bottom: 18px;
+    width: fit-content;
+    backdrop-filter: blur(5px);
+  }
+
   h1 { font-size: 2rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.5px; line-height: 1.1; }
   p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 20px 0; font-weight: 300; }
   
@@ -98,15 +114,23 @@
   .content-scroll {
     overflow-y: auto;
     max-height: 440px;
-    padding-right: 5px;
+    padding-right: 10px; /* Increased padding to separate text from thicker scrollbar */
     margin-bottom: 20px;
   }
+  /* Wider Scrollbar adjustments */
   .content-scroll::-webkit-scrollbar {
-    width: 4px;
+    width: 10px; 
+  }
+  .content-scroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 6px;
   }
   .content-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.5); /* Brighter for better visibility */
+    border-radius: 6px;
+  }
+  .content-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
   }
 
   /* Primary Buttons */
@@ -130,10 +154,31 @@
     box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
   }
 
+  /* Secondary Home Button */
+  .btn-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-bottom: 20px;
+    width: fit-content;
+  }
+  .btn-home:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+  }
+
   /* Timer Details */
   .timer-container {
     width: 100%;
-    margin-bottom: 25px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -144,7 +189,7 @@
     background-color: rgba(255, 255, 255, 0.2); 
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .timer-bar-fill {
     height: 100%;
@@ -316,7 +361,6 @@
     h1 { font-size: 1.6rem; margin-bottom: 10px; }
     p { font-size: 0.95rem; margin-bottom: 15px; }
     .content-scroll { max-height: 380px; }
-    .timer-container { margin-bottom: 15px; }
     .question-image-container { height: 140px; margin-bottom: 15px; border-radius: 12px; }
     .question-text-area { font-size: 1.05rem; margin-bottom: 15px; }
     .tiles-container { gap: 12px; }
@@ -352,7 +396,8 @@
       <!-- Populated by JS -->
     </div>
     <button class="btn-primary" onclick="submitCocQuiz()">Submit Answers</button>
-    <button class="btn-primary" style="background: rgba(255,255,255,0.2); margin-top: 10px;" onclick="resetCocQuiz()">Back to Home</button>
+    <!-- Made 'Back to Home' fully active-looking so it is clear it functions as an escape hatch -->
+    <button class="btn-primary" style="background: #e2e8f0; color: #006b8f; margin-top: 10px;" onclick="resetCocQuiz()">Back to Home</button>
   </div>
 
   <!-- CODE OF CONDUCT RESULTS SCREEN -->
@@ -368,6 +413,7 @@
 
   <!-- SCREEN 2: Background -->
   <div id="screen-background" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <h1>Background</h1>
     <div class="content-scroll">
       <p><strong>Objective:</strong> To evaluate how the participants will apply the gained knowledge of H2S safety in realistic scenarios before completing the training.</p>
@@ -381,6 +427,7 @@
 
   <!-- INTRO SCREEN 3: Video Briefing -->
   <div id="screen-intro-2" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <h1>Mission Briefing</h1>
     <div class="video-container-outer">
       <!-- HTML5 Inline Intro Video (No Loop) -->
@@ -396,11 +443,16 @@
 
   <!-- DYNAMIC QUESTION SCREEN -->
   <div id="screen-question" class="screen">
-    <div class="timer-container">
-      <div class="timer-bar-outer">
-        <div id="timer-fill" class="timer-bar-fill"></div>
+    
+    <!-- Top Bar: Home Button + Timer neatly aligned -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <button class="btn-home" style="margin-bottom: 0;" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
+      <div class="timer-container" style="width: 50%;">
+        <div class="timer-bar-outer" style="margin-bottom: 4px;">
+          <div id="timer-fill" class="timer-bar-fill"></div>
+        </div>
+        <div class="timer-label"><span id="timer-text">20</span>s</div>
       </div>
-      <div class="timer-label"><span id="timer-text">20</span>s</div>
     </div>
     
     <div class="question-image-container">
@@ -416,6 +468,7 @@
 
   <!-- DYNAMIC FEEDBACK SCREEN -->
   <div id="screen-feedback" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <div id="feedback-status" class="feedback-header"></div>
     
     <div class="explanation-card">
@@ -435,6 +488,7 @@
 
   <!-- FINAL RESULT SCREEN -->
   <div id="screen-final" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <div style="margin: auto 0; text-align: center;">
       <h1>Challenge Complete</h1>
       <p>You have successfully completed the safety protocol review.</p>
@@ -698,6 +752,9 @@
   }
 
   function goToScreen(screenId) {
+    // Stop the background timer if the user presses the Home button mid-question
+    clearInterval(timerInterval); 
+
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(screenId).classList.add('active');
     
