@@ -90,23 +90,7 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Typography & Badges */
-  .masthead-badge {
-    display: inline-block;
-    padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 18px;
-    width: fit-content;
-    backdrop-filter: blur(5px);
-  }
-
+  /* Typography */
   h1 { font-size: 2rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.5px; line-height: 1.1; }
   p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 20px 0; font-weight: 300; }
   
@@ -351,11 +335,9 @@
   <!-- INTRO SCREEN 1: Welcome -->
   <div id="screen-intro-1" class="screen active">
     <div style="margin: auto 0;">
-      <div class="masthead-badge">H2S Awareness</div>
-      
-      <!-- New Code of Conduct Hyperlink & Quiz Button -->
-      <a href="https://canva.link/v2huqz1m7d1xx9u" target="_blank" style="display:block; margin-bottom:10px; color:#a3e635; font-weight:700; text-decoration:underline; font-size:1.15rem; text-shadow: 0 1px 2px rgba(0,0,0,0.3);">HPSI Code of Conduct Course</a>
-      <button class="btn-primary" style="margin-bottom: 30px; padding: 12px 18px; font-size: 1rem; width: auto;" onclick="goToScreen('screen-coc-quiz')">Code of Conduct Quiz</button>
+      <!-- Code of Conduct Buttons -->
+      <button class="btn-primary" style="margin-bottom: 12px; padding: 14px 18px; font-size: 1.05rem;" onclick="window.open('https://canva.link/v2huqz1m7d1xx9u', '_blank')">HPSI Code of Conduct Course</button>
+      <button class="btn-primary" style="margin-bottom: 30px; padding: 14px 18px; font-size: 1.05rem;" onclick="goToScreen('screen-coc-quiz')">Code of Conduct Quiz</button>
 
       <h1>H2S Safety in Practice</h1>
       <p>Test applying your knowledge of emergency procedures in an H2S crisis situation. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
