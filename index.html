@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H2S Safety in Practice</title>
+<title>H2S Safety Microlearning & Simulation</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -89,49 +89,30 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* Typography & Badges */
-  .masthead-badge {
-    display: inline-block;
-    padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #ffffff;
-    margin-bottom: 18px;
-    width: fit-content;
-    backdrop-filter: blur(5px);
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
   }
+  .shake { animation: shake 0.4s ease; }
 
+  /* Typography */
   h1 { font-size: 2rem; font-weight: 700; margin: 0 0 15px 0; letter-spacing: -0.5px; line-height: 1.1; }
+  h2 { font-size: 1.4rem; font-weight: 600; margin: 0 0 10px 0; }
   p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 20px 0; font-weight: 300; }
   
   /* Background Screen Content Styling */
   .content-scroll {
     overflow-y: auto;
     max-height: 440px;
-    padding-right: 10px; /* Increased padding to separate text from thicker scrollbar */
+    padding-right: 10px; 
     margin-bottom: 20px;
   }
-  /* Wider Scrollbar adjustments */
-  .content-scroll::-webkit-scrollbar {
-    width: 10px; 
-  }
-  .content-scroll::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 6px;
-  }
-  .content-scroll::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5); /* Brighter for better visibility */
-    border-radius: 6px;
-  }
-  .content-scroll::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.8);
-  }
+  .content-scroll::-webkit-scrollbar { width: 10px; }
+  .content-scroll::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.1); border-radius: 6px; }
+  .content-scroll::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.5); border-radius: 6px; }
+  .content-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.8); }
 
   /* Primary Buttons */
   .btn-primary {
@@ -148,11 +129,7 @@
     width: 100%;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
-  .btn-primary:hover {
-    background: var(--button-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-  }
+  .btn-primary:hover { background: var(--button-hover); transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15); }
 
   /* Secondary Home Button */
   .btn-home {
@@ -171,204 +148,119 @@
     margin-bottom: 20px;
     width: fit-content;
   }
-  .btn-home:hover {
-    background: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
-  }
+  .btn-home:hover { background: rgba(255, 255, 255, 0.4); transform: translateY(-2px); }
 
-  /* Timer Details */
-  .timer-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .timer-bar-outer {
-    width: 100%;
-    height: 8px;
-    background-color: rgba(255, 255, 255, 0.2); 
-    border-radius: 4px;
-    overflow: hidden;
-    margin-bottom: 6px;
-  }
-  .timer-bar-fill {
-    height: 100%;
-    background: #ffffff; 
-    width: 100%;
-    transition: width 1s linear;
-    border-radius: 4px;
-  }
-  .timer-label {
+  /* Pro-Tip Callouts */
+  .pro-tip {
+    background: rgba(255, 255, 255, 0.15);
+    border-left: 4px solid #a3e635;
+    padding: 15px;
+    border-radius: 0 12px 12px 0;
+    margin-bottom: 20px;
     font-size: 0.95rem;
-    color: var(--text-primary);
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    line-height: 1.6;
   }
+  .pro-tip-title { color: #a3e635; display: block; margin-bottom: 5px; font-weight: 700; }
 
-  /* Image & Text Areas */
-  .question-image-container {
-    width: 100%;
-    height: 180px;
-    border-radius: 18px;
-    margin-bottom: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    overflow: hidden;
-    background-color: #000;
-  }
-  .question-image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .question-text-area {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    line-height: 1.4;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  }
-
-  /* H2S Answer Tiles */
-  .tiles-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-  .tile {
-    background-color: #ffffff;
-    border: 2px solid transparent;
-    border-radius: 16px;
-    padding: 16px 20px;
-    font-size: 1rem;
-    font-weight: 600;
+  /* Practice 1: Swipe/Bucket Cards */
+  .practice-card {
+    background: #fff;
     color: var(--text-dark);
-    cursor: pointer;
-    text-align: left;
-    transition: var(--transition);
+    padding: 30px 20px;
+    border-radius: 16px;
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    margin-bottom: 20px;
+    min-height: 140px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    justify-content: center;
   }
-  .tile:hover {
-    border-color: var(--gradient-bottom);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0, 107, 143, 0.2);
-  }
-
-  /* Feedback Screens */
-  .feedback-header {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    text-align: center;
-    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  }
-  .explanation-card {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .bucket-btns { display: flex; gap: 10px; margin-bottom: 15px; }
+  .btn-bucket {
+    flex: 1;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
     font-size: 1rem;
-    color: #f8fafc;
-    line-height: 1.5;
+    font-weight: 700;
+    color: #fff;
+    cursor: pointer;
+    transition: var(--transition);
   }
+  .btn-false { background: #ef4444; }
+  .btn-true { background: #22c55e; }
+  .btn-bucket:hover { filter: brightness(1.1); transform: translateY(-2px); }
+  .feedback-text { text-align: center; font-weight: 600; min-height: 48px; margin-bottom: 15px; line-height: 1.4; }
+
+  /* Practice 2: Drag & Drop Sequencer */
+  .sequence-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sequence-item {
+    background: #fff;
+    color: var(--text-dark);
+    padding: 10px 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+  }
+  .sequence-item:active { cursor: grabbing; }
+  .sequence-item.dragging { opacity: 0.5; }
+  .seq-controls { display: flex; gap: 5px; }
+  .btn-seq { background: #e2e8f0; border: none; border-radius: 6px; padding: 6px 12px; cursor: pointer; color: #18181b;}
+  
+  /* Sim Timer & Tiles */
+  .timer-container { width: 100%; display: flex; flex-direction: column; align-items: flex-end; }
+  .timer-bar-outer { width: 100%; height: 8px; background-color: rgba(255, 255, 255, 0.2); border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+  .timer-bar-fill { height: 100%; background: #ffffff; width: 100%; transition: width 1s linear; border-radius: 4px; }
+  .timer-label { font-size: 0.95rem; color: var(--text-primary); font-weight: 600; letter-spacing: 0.5px; }
+  
+  .question-image-container { width: 100%; height: 180px; border-radius: 18px; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); overflow: hidden; background-color: #000; }
+  .question-image-container img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .question-text-area { font-size: 1.15rem; font-weight: 600; margin-bottom: 20px; line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+  
+  .tiles-container { display: flex; flex-direction: column; gap: 16px; margin-bottom: 20px; }
+  .tile { background-color: #ffffff; border: 2px solid transparent; border-radius: 16px; padding: 16px 20px; font-size: 1rem; font-weight: 600; color: var(--text-dark); cursor: pointer; text-align: left; transition: var(--transition); display: flex; align-items: center; justify-content: space-between; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+  .tile:hover { border-color: var(--gradient-bottom); transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0, 107, 143, 0.2); }
+  
+  /* Feedback Screens */
+  .feedback-header { font-size: 2.2rem; font-weight: 700; margin-bottom: 15px; text-align: center; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+  .explanation-card { background-color: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255, 255, 255, 0.2); font-size: 1rem; color: #f8fafc; line-height: 1.5; }
   
   /* Inline Video Container */
-  .video-container-outer {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    height: auto;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-    background: #000;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    margin-bottom: 20px;
-  }
-  .video-container-outer video {
-    width: 100%; 
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
+  .video-container-outer { position: relative; width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 16px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); background: #000; border: 1px solid rgba(255, 255, 255, 0.15); margin-bottom: 20px; }
+  .video-container-outer video { width: 100%; height: 100%; object-fit: cover; display: block; border: none; margin: 0; padding: 0; }
 
   /* Code of Conduct Quiz Styles */
-  .coc-question-block {
-    margin-bottom: 30px;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  .coc-question-text {
-    font-size: 1.1rem;
-    font-weight: 700;
-    margin-bottom: 15px;
-    line-height: 1.4;
-    color: #fff;
-  }
-  .form-tile {
-    background-color: #ffffff;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    padding: 12px 16px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    cursor: pointer;
-    text-align: left;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-  }
-  .form-tile:hover {
-    border-color: var(--gradient-bottom);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(0, 107, 143, 0.2);
-  }
-  .form-tile input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--gradient-bottom);
-    cursor: pointer;
-  }
-
+  .coc-question-block { margin-bottom: 30px; background: rgba(0, 0, 0, 0.2); padding: 20px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.1); }
+  .coc-question-text { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; line-height: 1.4; color: #fff; }
+  .form-tile { background-color: #ffffff; border: 2px solid transparent; border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; font-weight: 600; color: var(--text-dark); cursor: pointer; text-align: left; transition: var(--transition); display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 10px; }
+  
   /* --- MOBILE RESPONSIVENESS --- */
   @media (max-width: 480px) {
-    body {
-      padding: 0; 
-    }
-    #app {
-      min-height: 100vh;
-      border-radius: 0; 
-      border: none;
-    }
-    .screen {
-      padding: 20px 15px 150px 15px; 
-    }
+    body { padding: 0; }
+    #app { min-height: 100vh; border-radius: 0; border: none; }
+    .screen { padding: 20px 15px 150px 15px; }
     h1 { font-size: 1.6rem; margin-bottom: 10px; }
     p { font-size: 0.95rem; margin-bottom: 15px; }
     .content-scroll { max-height: 380px; }
     .question-image-container { height: 140px; margin-bottom: 15px; border-radius: 12px; }
     .question-text-area { font-size: 1.05rem; margin-bottom: 15px; }
-    .tiles-container { gap: 12px; }
-    .tile { padding: 12px 15px; font-size: 0.95rem; border-radius: 12px; }
-    .btn-primary { padding: 14px; font-size: 1.05rem; border-radius: 12px; }
-    .feedback-header { font-size: 1.8rem; margin-bottom: 10px; }
-    .explanation-card { padding: 15px; font-size: 0.9rem; margin-bottom: 15px; }
-    .video-container-outer { border-radius: 12px; }
+    .sequence-item { font-size: 0.85rem; padding: 10px 12px; }
   }
 </style>
 </head>
@@ -376,17 +268,30 @@
 
 <div id="app">
   
-  <!-- INTRO SCREEN 1: Welcome -->
+  <!-- EVENT 1: Gain Attention (The Hook) & Home -->
   <div id="screen-intro-1" class="screen active">
     <div style="margin: auto 0;">
-      <!-- Code of Conduct Buttons -->
       <button class="btn-primary" style="margin-bottom: 12px; padding: 14px 18px; font-size: 1.05rem;" onclick="window.open('https://canva.link/v2huqz1m7d1xx9u', '_blank')">HPSI Code of Conduct Course</button>
       <button class="btn-primary" style="margin-bottom: 30px; padding: 14px 18px; font-size: 1.05rem;" onclick="goToScreen('screen-coc-quiz')">Code of Conduct Quiz</button>
 
-      <h1>H2S Safety in Practice</h1>
-      <p>Test applying your knowledge of emergency procedures in an H2S crisis situation. You will watch a brief introduction, followed by 5 timed scenarios. You have 20 seconds per question.</p>
+      <span style="display: inline-block; padding: 4px 10px; background: #ff4d4d; color: #fff; font-size: 0.8rem; font-weight: bold; border-radius: 10px; margin-bottom: 10px;">H2S SIMULATION</span>
+      <h1>The Invisible Threat</h1>
+      <p>You can’t see it. After a few minutes, you can't smell it. At high concentrations, it can cause unconsciousness in under 3 seconds.</p>
+      <p>When the alarm sounds, muscle memory is the only thing standing between you and disaster. Are you ready to react?</p>
     </div>
-    <button class="btn-primary" onclick="initiateAudioAndProceed('screen-background')">Next Step (H2S Sim)</button>
+    <button class="btn-primary" onclick="goToScreen('screen-background')">Enter Module</button>
+  </div>
+
+  <!-- PORTFOLIO CONTEXT: Background Screen -->
+  <div id="screen-background" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
+    <h1>Background</h1>
+    <div class="content-scroll">
+      <p><strong>Objective:</strong> To evaluate how the participants will apply the gained knowledge of H2S safety in realistic scenarios before completing the training.</p>
+      <p>This is a short, performance-based module designed to be learner-centered and highly interactive. It incorporates learner engagement elements such as decision-making scenarios and simulation-styled assessment of learners' knowledge.</p>
+      <p>This was a very tech-driven design process: it involved using Veo 3.1 for AI video generation, Gemini for AI image generation, webapp design and debugging, and Github for web hosting--using completely new workflows.</p>
+    </div>
+    <button class="btn-primary" onclick="goToScreen('screen-objectives')">Continue to Briefing</button>
   </div>
 
   <!-- CODE OF CONDUCT QUIZ SCREEN -->
@@ -396,7 +301,6 @@
       <!-- Populated by JS -->
     </div>
     <button class="btn-primary" onclick="submitCocQuiz()">Submit Answers</button>
-    <!-- Made 'Back to Home' fully active-looking so it is clear it functions as an escape hatch -->
     <button class="btn-primary" style="background: #e2e8f0; color: #006b8f; margin-top: 10px;" onclick="resetCocQuiz()">Back to Home</button>
   </div>
 
@@ -410,41 +314,127 @@
     <button class="btn-primary" onclick="resetCocQuiz()">Return Home</button>
   </div>
 
-
-  <!-- SCREEN 2: Background -->
-  <div id="screen-background" class="screen">
+  <!-- EVENT 2: Objectives -->
+  <div id="screen-objectives" class="screen">
     <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
-    <h1>Background</h1>
+    <h1>Your Mission</h1>
     <div class="content-scroll">
-      <p><strong>Objective:</strong> To evaluate how the participants will apply the gained knowledge of H2S safety in realistic scenarios before completing the training.</p>
-      
-      <p>This is a short, performance-based module designed to be learner-centered and highly interactive. It incorporates learner engagement elements such as decision-making scenarios and simulation-styled assessment of learners' knowledge.</p>
-      
-      <p>This was a very tech-driven design process: it involved using Veo 3.1 for ai video generation, Gemini 3.6 for ai image generation and webapp design and debugging, and Github for web hosting--using completely new workflows. The content design employed (among others) genuine Saudi Aramco H2S Awareness learning text from the open web.</p>
+      <p>In the next 15 minutes, you must master the critical protocols to survive an H2S release.</p>
+      <p><strong>By the end of this module, you will:</strong></p>
+      <ul style="line-height: 1.6; font-size: 1.05rem;">
+        <li><strong>Identify</strong> the physical properties and behavioral traits of H2S gas.</li>
+        <li><strong>Sequence</strong> the exact, non-negotiable steps for a safe emergency escape.</li>
+        <li><strong>Respond</strong> to a timed, 5-scenario high-pressure simulation.</li>
+      </ul>
     </div>
-    <button class="btn-primary" onclick="goToScreen('screen-intro-2')">Continue to Briefing</button>
+    <button class="btn-primary" onclick="goToScreen('screen-recall')">Acknowledge</button>
   </div>
 
-  <!-- INTRO SCREEN 3: Video Briefing -->
+  <!-- EVENT 3: Stimulate Recall -->
+  <div id="screen-recall" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
+    <div style="margin: auto 0;">
+      <h2>Quick Question:</h2>
+      <p>When a fire alarm sounds in an office, your instinct is to run straight to the nearest exit.</p>
+      <p>H2S is different. Your escape route depends entirely on the wind. Have you checked a windsock today?</p>
+      
+      <div style="display:flex; gap: 10px; margin-top: 20px;">
+        <button class="btn-primary" style="padding: 12px; background: rgba(255,255,255,0.2); border: 1px solid #fff;" onclick="goToScreen('screen-presentation')">Yes</button>
+        <button class="btn-primary" style="padding: 12px; background: rgba(255,255,255,0.2); border: 1px solid #fff;" onclick="goToScreen('screen-presentation')">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EVENT 4 & 5: Present Content & Guidance -->
+  <div id="screen-presentation" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
+    <h1>H2S Briefing</h1>
+    <div class="content-scroll">
+      
+      <h2>1. Physical Properties & Hazards</h2>
+      <ul style="line-height: 1.5; padding-left: 20px; margin-bottom: 20px;">
+        <li><strong>Heavier than air:</strong> Gas settles and concentrates in low-lying areas (trenches, cellars).</li>
+        <li><strong>Colorless & Flammable:</strong> You cannot see it, and it can easily ignite.</li>
+        <li><strong>Olfactory Fatigue:</strong> At low concentrations, it smells like rotten eggs. At high concentrations (or over time), it deadens your sense of smell completely. You cannot trust your nose.</li>
+        <li><strong>Exposure Limit:</strong> 10 ppm (parts per million) is the threshold limit.</li>
+      </ul>
+      
+      <div class="pro-tip">
+        <span class="pro-tip-title">Pro-Tip: The 3 U's</span>
+        Since H2S is heavier than air, it settles in low areas. Always evacuate:<br>
+        <strong>U</strong>pwind: Move into the wind (so the gas blows away from you).<br>
+        <strong>U</strong>p: Get out of natural low-lying areas or confined spaces (trenches, cellars, pits).<br>
+        <strong>U</strong>pward: Climb to a higher structural elevation (like a platform, rig floor, or upper deck).
+      </div>
+
+      <h2>2. Emergency Escape Protocol</h2>
+      <p>If the stationary alarm sounds, your personal monitor goes off, or you suspect H2S gas, your only priority is self-preservation. Do not attempt a rescue.</p>
+      <ol style="line-height: 1.5; padding-left: 20px; margin-bottom: 20px;">
+        <li><strong>Stop work and hold your breath</strong> immediately.</li>
+        <li><strong>Check the wind direction</strong> by locating the nearest windsock.</li>
+        <li><strong>Don your EEBA</strong> (Emergency Escape Breathing Apparatus).</li>
+        <li><strong>Evacuate crosswind or upwind</strong>. Never run downwind in the same direction the gas is blowing.</li>
+        <li><strong>Proceed to the Safe Briefing Area (SBA)</strong> and report to the Muster Captain for a headcount. Keep your mask on until the all-clear is given.</li>
+      </ol>
+      
+    </div>
+    <button class="btn-primary" onclick="initPractice1()">Start Practice: Fact Check</button>
+  </div>
+
+  <!-- EVENT 6 & 7: Practice 1 (Categorization) -->
+  <div id="screen-practice-1" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-presentation')">⬅ Back</button>
+    <h2>Fact Check</h2>
+    <p>Sort the following statements quickly.</p>
+    
+    <div id="p1-card" class="practice-card">Loading...</div>
+    
+    <div id="p1-feedback" class="feedback-text"></div>
+    
+    <div class="bucket-btns" id="p1-bucket-btns">
+      <button id="btn-p1-false" class="btn-bucket btn-false" onclick="handleSwipe(false)">FALSE</button>
+      <button id="btn-p1-true" class="btn-bucket btn-true" onclick="handleSwipe(true)">TRUE</button>
+    </div>
+    
+    <button id="p1-next-stmt-btn" class="btn-primary" style="display:none; background:#a3e635; color:#18181b; margin-bottom: 15px;" onclick="nextStatement()">Next Statement ➔</button>
+    
+    <button id="btn-p1-next" class="btn-primary" style="margin-top: 10px;" onclick="initPractice2()">Next: Protocol Sequence ⏭</button>
+  </div>
+
+  <!-- EVENT 6 & 7: Practice 2 (Escape Sequencing) -->
+  <div id="screen-practice-2" class="screen">
+    <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
+    <h2>Escape Sequence</h2>
+    <p>The stationary H2S alarm begins to flash red and sound its siren. Organize the 5-Step Emergency Escape Protocol in exact chronological order.</p>
+    
+    <div class="content-scroll" style="margin-bottom: 10px;">
+      <ul id="p2-list" class="sequence-list">
+        <!-- Injected via JS -->
+      </ul>
+    </div>
+    
+    <div id="p2-feedback" class="feedback-text" style="color:#ff4d4d; min-height: 48px;"></div>
+    
+    <button class="btn-primary" id="btn-check-seq" onclick="checkSequence()">Check Order</button>
+    <button class="btn-primary" id="btn-p2-next" style="background:#a3e635; color:#18181b; margin-top: 15px;" onclick="goToScreen('screen-intro-2')">Proceed to Simulation ⏭</button>
+  </div>
+
+  <!-- EVENT 8: INTRO TO SIM (Mission Briefing) -->
   <div id="screen-intro-2" class="screen">
     <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <h1>Mission Briefing</h1>
     <div class="video-container-outer">
-      <!-- HTML5 Inline Intro Video (No Loop) -->
       <video id="intro-video" playsinline preload="auto">
         <source id="intro-video-source" src="" type="video/mp4">
         Your browser does not support inline video.
       </video>
     </div>
-    <p>You are about to enter an H2S emergency situation at an Aramco facility! Use the knowledge you gained about H2S Safety Awareness to help you stay safe! This will require you to focus, think fast, and be sure of the protocols.</p>
-    <p style="margin-bottom: 0;">Click below when you are ready to begin the timer for Question 1.</p>
-    <button class="btn-primary" onclick="startQuestion(1)">Start Quiz</button>
+    <p>You are about to enter an H2S emergency situation at an Aramco facility. You have 20 seconds per question to make life-critical decisions based on your training.</p>
+    <button class="btn-primary" onclick="startQuestion(1)">Start Timer</button>
   </div>
 
-  <!-- DYNAMIC QUESTION SCREEN -->
+  <!-- DYNAMIC QUESTION SCREEN (SIM) -->
   <div id="screen-question" class="screen">
-    
-    <!-- Top Bar: Home Button + Timer neatly aligned -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
       <button class="btn-home" style="margin-bottom: 0;" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
       <div class="timer-container" style="width: 50%;">
@@ -456,17 +446,14 @@
     </div>
     
     <div class="question-image-container">
-      <img id="q-image" src="" alt="Scenario">
+      <img id="q-image" src="" alt="Scenario Image">
     </div>
     
     <div id="q-text" class="question-text-area"></div>
-    
-    <div id="q-choices" class="tiles-container">
-      <!-- Choices injected here via JS -->
-    </div>
+    <div id="q-choices" class="tiles-container"></div>
   </div>
 
-  <!-- DYNAMIC FEEDBACK SCREEN -->
+  <!-- DYNAMIC FEEDBACK SCREEN (SIM) -->
   <div id="screen-feedback" class="screen">
     <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <div id="feedback-status" class="feedback-header"></div>
@@ -476,7 +463,6 @@
     </div>
 
     <div class="video-container-outer">
-      <!-- HTML5 Inline Feedback Video (No Loop) -->
       <video id="f-video" playsinline preload="auto">
         <source id="f-video-source" src="" type="video/mp4">
         Your browser does not support inline video.
@@ -491,9 +477,9 @@
     <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <div style="margin: auto 0; text-align: center;">
       <h1>Challenge Complete</h1>
-      <p>You have successfully completed the safety protocol review.</p>
+      <p>You have successfully completed the safety protocol simulation.</p>
     </div>
-    <button class="btn-primary" onclick="location.reload()">Restart Quiz</button>
+    <button class="btn-primary" onclick="location.reload()">Restart Module</button>
   </div>
 
 </div>
@@ -501,132 +487,227 @@
 <script>
   // --- CODE OF CONDUCT QUIZ DATA ---
   const cocQuizData = [
-    {
-      type: "radio",
-      question: "1. True or False: Managers are responsible for communicating, promoting, and monitoring compliance with the requirements of this Code of Conduct within their area of responsibility.",
-      options: ["True", "False"],
-      correctAnswers: ["True"]
-    },
-    {
-      type: "radio",
-      question: "2. True or False: Failure to read this Code of Conduct or sign the acknowledgment form does not excuse an HPSI employee from compliance with this Code of Conduct.",
-      options: ["True", "False"],
-      correctAnswers: ["True"]
-    },
-    {
-      type: "checkbox",
-      question: "3. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
-      options: [
-        "Booking flights", 
-        "Safeguarding all personal data", 
-        "Respecting human and labor rights", 
-        "Avoiding conflicts of interest", 
-        "Planning social gatherings", 
-        "Following export controls and sanctions"
-      ],
-      correctAnswers: [
-        "Safeguarding all personal data", 
-        "Respecting human and labor rights", 
-        "Avoiding conflicts of interest", 
-        "Following export controls and sanctions"
-      ]
-    },
-    {
-      type: "checkbox",
-      question: "4. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
-      options: [
-        "Avoiding insider trading and money laundering", 
-        "Mailing holiday cards", 
-        "Abiding by fair competition practices", 
-        "Avoiding gifts that could mean undue business influence", 
-        "Safeguarding company property and information", 
-        "Participating in prize raffles"
-      ],
-      correctAnswers: [
-        "Avoiding insider trading and money laundering", 
-        "Abiding by fair competition practices", 
-        "Avoiding gifts that could mean undue business influence", 
-        "Safeguarding company property and information"
-      ]
-    },
-    {
-      type: "checkbox",
-      question: "5. Choose all answers that were mentioned (more than one) Your duties as an employee include:",
-      options: [
-        "Good judgement", 
-        "Care", 
-        "Charisma", 
-        "Consideration", 
-        "Familiarity with your duties", 
-        "Performing your duties"
-      ],
-      correctAnswers: [
-        "Good judgement", 
-        "Care", 
-        "Consideration", 
-        "Familiarity with your duties", 
-        "Performing your duties"
-      ]
-    }
+    { type: "radio", question: "1. True or False: Managers are responsible for communicating, promoting, and monitoring compliance...", options: ["True", "False"], correctAnswers: ["True"] },
+    { type: "radio", question: "2. True or False: Failure to read this Code of Conduct does not excuse compliance.", options: ["True", "False"], correctAnswers: ["True"] }
   ];
 
-  // --- H2S SIMULATION DATA ---
-  const introVideoSrc = "Intro.mp4";
+  function buildCocQuiz() {
+    const container = document.getElementById('coc-quiz-container');
+    container.innerHTML = '';
+    cocQuizData.forEach((q, qIndex) => {
+      const block = document.createElement('div');
+      block.className = 'coc-question-block';
+      const qTextElement = document.createElement('div');
+      qTextElement.className = 'coc-question-text';
+      qTextElement.innerText = q.question;
+      block.appendChild(qTextElement);
 
-  const quizData = [
-    {
-      question: "Hazard Detection (Sec 1.4) Walking past a low-lying cellar pit, you smell a faint 'rotten egg' smell that suddenly disappears, but no stationary alarm sounds yet. What do you do next?",
-      imageSrc: "Q1.png",
-      choices: [
-        { text: "Keep working; if the smell is gone, the gas has dispersed.", isCorrect: false },
-        { text: "Alert Ahmad and check your personal H2S monitor.", isCorrect: true }
-      ],
-      explanation: "A sudden loss of the 'rotten egg' smell can indicate olfactory fatigue (loss of smell), a sign of high H2S concentrations. You must immediately check your monitor and alert your team.",
-      videoSrc: "Q1.mp4"
-    },
-    {
-      question: "Alarm Trigger (Sec 3.2) The personal alarm vibrates and flashes red (>10 ppm). Ahmad signals an emergency. What do you do next?",
-      imageSrc: "Q2.png",
-      choices: [
-        { text: "Run quickly toward the office trailer to read the central gas monitor board.", isCorrect: false },
-        { text: "Go don an EEBA mask before attempting to communicate or leave site.", isCorrect: true }
-      ],
-      explanation: "When an H2S alarm triggers, your immediate priority is to don your Emergency Escape Breathing Apparatus (EEBA) to protect your airway before taking any other action.",
-      videoSrc: "Q2.mp4"
-    },
-    {
-      question: "Pre-Inspection (Sec 5.2) In the equipment shed, you select an Emergency Escape Breathing Apparatus (EEBA). What is your first step?",
-      imageSrc: "Q3.png",
-      choices: [
-        { text: "Ensure pressure gauge reading is within 10% of maximum operating pressure.", isCorrect: true },
-        { text: "Ensure cylinder airflow valve opens easily by turning it twice.", isCorrect: false }
-      ],
-      explanation: "Before deployment, you must verify the cylinder is full by ensuring the pressure gauge is within 10% of its maximum operating pressure.",
-      videoSrc: "Q3.mp4"
-    },
-    {
-      question: "Wind Evaluation (Sec 3.2) Mask on and breathing. You glance at the rig windsock. It is blowing directly toward the North. What do you do next?",
-      imageSrc: "Q4.png",
-      choices: [
-        { text: "Evacuate toward the North (downwind).", isCorrect: false },
-        { text: "Evacuate toward the South or Crosswind (East/West).", isCorrect: true }
-      ],
-      explanation: "Never run downwind with the gas. Always evacuate upwind or crosswind away from the hazard to escape the gas plume safely.",
-      videoSrc: "Q4.mp4"
-    },
-    {
-      question: "Assembly Point (Sec 3.2) You reach the designated Safe Briefing Area (SBA). What is your immediate priority upon arriving?",
-      imageSrc: "Q5.png",
-      choices: [
-        { text: "Report to the Muster Captain for headcount and remain in the SBA.", isCorrect: true },
-        { text: "Take off your EEBA mask immediately since you reached the SBA.", isCorrect: false }
-      ],
-      explanation: "Upon reaching the Safe Briefing Area, your first priority is to report for a headcount while keeping your respiratory protection on until the official all-clear is given.",
-      videoSrc: "Q5.mp4"
-    }
+      q.options.forEach((opt) => {
+        const label = document.createElement('label');
+        label.className = 'form-tile';
+        const input = document.createElement('input');
+        input.type = q.type;
+        input.name = `coc_q_${qIndex}`;
+        input.value = opt;
+        const span = document.createElement('span');
+        span.innerText = opt;
+        label.appendChild(input);
+        label.appendChild(span);
+        block.appendChild(label);
+      });
+      container.appendChild(block);
+    });
+  }
+
+  function submitCocQuiz() { goToScreen('screen-coc-result'); }
+  function resetCocQuiz() { goToScreen('screen-intro-1'); }
+
+  // --- PRACTICE 1: CATEGORIZATION LOGIC ---
+  const p1Facts = [
+    { text: "H2S is heavier than air.", isTrue: true, labelTrue: "TRUE", labelFalse: "FALSE", expl: "It settles in low areas." },
+    { text: "Evacuating directly downwind.", isTrue: false, labelTrue: "SAFE", labelFalse: "UNSAFE", expl: "Always evacuate crosswind or upwind." },
+    { text: "An EEBA mask is used for emergency escape, not rescue.", isTrue: true, labelTrue: "TRUE", labelFalse: "FALSE", expl: "EEBA is strictly for self-preservation." },
+    { text: "Removing your EEBA mask immediately upon reaching the Safe Briefing Area.", isTrue: false, labelTrue: "SAFE", labelFalse: "UNSAFE", expl: "Keep it on until the official all-clear is given." },
+    { text: "Olfactory fatigue means you quickly lose the ability to smell H2S.", isTrue: true, labelTrue: "TRUE", labelFalse: "FALSE", expl: "Never rely on your nose." }
   ];
+  let p1Index = 0;
 
-  // --- GLOBAL STATE ---
+  function initPractice1() {
+    p1Index = 0;
+    document.getElementById('p1-bucket-btns').style.display = 'flex';
+    document.getElementById('p1-next-stmt-btn').style.display = 'none';
+    document.getElementById('p1-feedback').innerText = '';
+    loadP1Card();
+    goToScreen('screen-practice-1');
+  }
+
+  function loadP1Card() {
+    const card = document.getElementById('p1-card');
+    card.classList.remove('shake');
+    if (p1Index < p1Facts.length) {
+      const fact = p1Facts[p1Index];
+      card.innerText = fact.text;
+      document.getElementById('btn-p1-true').innerText = fact.labelTrue;
+      document.getElementById('btn-p1-false').innerText = fact.labelFalse;
+    } else {
+      card.innerText = "Excellent! You know the facts.";
+      document.getElementById('p1-bucket-btns').style.display = 'none';
+      document.getElementById('p1-next-stmt-btn').style.display = 'none';
+    }
+  }
+
+  function handleSwipe(userSelection) {
+    const fact = p1Facts[p1Index];
+    const feedback = document.getElementById('p1-feedback');
+    const card = document.getElementById('p1-card');
+    
+    if (userSelection === fact.isTrue) {
+      feedback.style.color = '#a3e635';
+      feedback.innerHTML = `<strong>Correct!</strong> ${fact.expl}`;
+      document.getElementById('p1-bucket-btns').style.display = 'none';
+      document.getElementById('p1-next-stmt-btn').style.display = 'block';
+    } else {
+      feedback.style.color = '#ff4d4d';
+      feedback.innerHTML = `<strong>Incorrect.</strong> ${fact.expl} Try again.`;
+      card.classList.remove('shake');
+      void card.offsetWidth; 
+      card.classList.add('shake');
+    }
+  }
+
+  function nextStatement() {
+    p1Index++;
+    document.getElementById('p1-feedback').innerText = '';
+    document.getElementById('p1-next-stmt-btn').style.display = 'none';
+    document.getElementById('p1-bucket-btns').style.display = 'flex';
+    loadP1Card();
+  }
+
+  // --- PRACTICE 2: ESCAPE SEQUENCING LOGIC ---
+  const p2CorrectOrder = [
+    { id: 1, text: "1. Stop work & hold your breath" },
+    { id: 2, text: "2. Check wind direction (windsock)" },
+    { id: 3, text: "3. Put on EEBA mask" },
+    { id: 4, text: "4. Evacuate crosswind or upwind" },
+    { id: 5, text: "5. Report to SBA for headcount" }
+  ];
+  
+  // Starting scrambled state
+  let currentOrder = [ 
+    p2CorrectOrder[3], p2CorrectOrder[0], p2CorrectOrder[4], p2CorrectOrder[2], p2CorrectOrder[1] 
+  ]; 
+
+  function initPractice2() {
+    renderList();
+    document.getElementById('p2-feedback').innerText = '';
+    goToScreen('screen-practice-2');
+  }
+
+  function renderList() {
+    const list = document.getElementById('p2-list');
+    list.innerHTML = '';
+    currentOrder.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.className = 'sequence-item';
+      li.draggable = true;
+      li.dataset.index = index;
+      
+      li.addEventListener('dragstart', handleDragStart);
+      li.addEventListener('dragover', handleDragOver);
+      li.addEventListener('drop', handleDrop);
+      
+      const textSpan = document.createElement('span');
+      textSpan.innerText = item.text.substring(3); // Hide the actual number from the user
+
+      const controls = document.createElement('div');
+      controls.className = 'seq-controls';
+      
+      if (index > 0) {
+        const btnUp = document.createElement('button');
+        btnUp.className = 'btn-seq';
+        btnUp.innerText = '↑';
+        btnUp.onclick = () => moveItem(index, -1);
+        controls.appendChild(btnUp);
+      }
+      if (index < currentOrder.length - 1) {
+        const btnDown = document.createElement('button');
+        btnDown.className = 'btn-seq';
+        btnDown.innerText = '↓';
+        btnDown.onclick = () => moveItem(index, 1);
+        controls.appendChild(btnDown);
+      }
+
+      li.appendChild(textSpan);
+      li.appendChild(controls);
+      list.appendChild(li);
+    });
+  }
+
+  function moveItem(index, direction) {
+    const temp = currentOrder[index];
+    currentOrder[index] = currentOrder[index + direction];
+    currentOrder[index + direction] = temp;
+    renderList();
+  }
+
+  let draggedIndex = null;
+  function handleDragStart(e) {
+    draggedIndex = +e.target.dataset.index;
+    e.target.classList.add('dragging');
+  }
+  function handleDragOver(e) { e.preventDefault(); }
+  function handleDrop(e) {
+    e.preventDefault();
+    const targetLi = e.target.closest('.sequence-item');
+    if (!targetLi) return;
+    const targetIndex = +targetLi.dataset.index;
+    const item = currentOrder.splice(draggedIndex, 1)[0];
+    currentOrder.splice(targetIndex, 0, item);
+    renderList();
+  }
+
+  function checkSequence() {
+    let firstErrorIndex = -1;
+    for (let i = 0; i < currentOrder.length; i++) {
+      if (currentOrder[i].id !== p2CorrectOrder[i].id) {
+        firstErrorIndex = i;
+        break;
+      }
+    }
+
+    const feedback = document.getElementById('p2-feedback');
+    
+    if (firstErrorIndex === -1) {
+      feedback.style.color = '#a3e635';
+      feedback.innerText = "Perfect! You prioritized self-preservation and followed the escape route correctly.";
+    } else {
+      feedback.style.color = '#ff4d4d';
+      
+      // Smart Validation Logic for Escape
+      const indexOfEEBA = currentOrder.findIndex(item => item.id === 3);
+      const indexOfEvacuate = currentOrder.findIndex(item => item.id === 4);
+      const indexOfWind = currentOrder.findIndex(item => item.id === 2);
+      
+      if (indexOfEvacuate < indexOfWind) {
+          feedback.innerText = "Incorrect. You cannot know which way to safely evacuate until you check the wind direction.";
+      } else if (indexOfEvacuate < indexOfEEBA) {
+          feedback.innerText = "Incorrect. You must put on your EEBA mask BEFORE you start evacuating through a potential gas plume.";
+      } else if (firstErrorIndex === 0 && currentOrder[0].id !== 1) {
+          feedback.innerText = "Incorrect. The very first thing you must do when the alarm sounds is stop work and hold your breath.";
+      } else if (currentOrder[currentOrder.length - 1].id !== 5) {
+          feedback.innerText = "Incorrect. Your final step must always be reporting to the Safe Briefing Area (SBA) for a headcount.";
+      } else {
+          feedback.innerText = `Incorrect. Step ${firstErrorIndex + 1} is out of order. Review the protocol and try again.`;
+      }
+
+      const list = document.getElementById('p2-list');
+      list.classList.remove('shake');
+      void list.offsetWidth; 
+      list.classList.add('shake');
+    }
+  }
+
+  // --- SIMULATION LOGIC ---
   const TIME_LIMIT = 20;
   let currentQuestionIndex = 0;
   let timeLeft = TIME_LIMIT;
@@ -639,145 +720,28 @@
   const qChoices = document.getElementById('q-choices');
   const feedbackStatus = document.getElementById('feedback-status');
   const fExplanation = document.getElementById('f-explanation');
-  
-  const introVideo = document.getElementById('intro-video');
-  const introVideoSource = document.getElementById('intro-video-source');
-  const fVideo = document.getElementById('f-video');
   const fVideoSource = document.getElementById('f-video-source');
-  
+  const fVideo = document.getElementById('f-video');
   const btnNextQuestion = document.getElementById('btn-next-question');
 
-
-  // --- CODE OF CONDUCT QUIZ LOGIC ---
-  function buildCocQuiz() {
-    const container = document.getElementById('coc-quiz-container');
-    container.innerHTML = '';
-    cocQuizData.forEach((q, qIndex) => {
-      const block = document.createElement('div');
-      block.className = 'coc-question-block';
-      
-      const qTextElement = document.createElement('div');
-      qTextElement.className = 'coc-question-text';
-      qTextElement.innerText = q.question;
-      block.appendChild(qTextElement);
-
-      q.options.forEach((opt) => {
-        const label = document.createElement('label');
-        label.className = 'form-tile';
-        
-        const input = document.createElement('input');
-        input.type = q.type;
-        input.name = `coc_q_${qIndex}`;
-        input.value = opt;
-        
-        const span = document.createElement('span');
-        span.innerText = opt;
-        
-        label.appendChild(input);
-        label.appendChild(span);
-        block.appendChild(label);
-      });
-      container.appendChild(block);
-    });
-  }
-
-  function submitCocQuiz() {
-    let score = 0;
-    let allAnswered = true;
-
-    cocQuizData.forEach((q, qIndex) => {
-      const inputs = document.querySelectorAll(`input[name="coc_q_${qIndex}"]:checked`);
-      if (inputs.length === 0) {
-        allAnswered = false;
-      }
-      
-      const selectedValues = Array.from(inputs).map(inp => inp.value);
-      
-      if (q.type === 'radio') {
-        if (selectedValues[0] === q.correctAnswers[0]) {
-          score++;
-        }
-      } else if (q.type === 'checkbox') {
-        // Must match exact length and exactly the right answers to get a point
-        const isCorrect = selectedValues.length === q.correctAnswers.length && 
-                          selectedValues.every(val => q.correctAnswers.includes(val));
-        if (isCorrect) score++;
-      }
-    });
-
-    if (!allAnswered) {
-      alert("Please answer all questions before submitting.");
-      return;
+  const quizData = [
+    {
+      question: "Hazard Detection: You smell a faint 'rotten egg' smell that suddenly disappears. What do you do?",
+      imageSrc: "Q1.png", videoSrc: "Q1.mp4",
+      choices: [
+        { text: "Keep working.", isCorrect: false },
+        { text: "Alert team and check monitor.", isCorrect: true }
+      ],
+      explanation: "A sudden loss of smell can indicate olfactory fatigue. Alert your team immediately."
     }
-
-    const title = document.getElementById('coc-res-title');
-    const scoreText = document.getElementById('coc-res-score');
-    const msg = document.getElementById('coc-res-msg');
-
-    scoreText.innerText = `Score: ${score} / 5`;
-    if (score >= 4) {
-      title.innerText = "Passed!";
-      title.style.color = '#a3e635'; 
-      msg.innerText = "Congratulations, you have passed the Code of Conduct Quiz.";
-    } else {
-      title.innerText = "Failed";
-      title.style.color = '#ff4d4d'; 
-      msg.innerText = "You did not achieve the minimum passing score of 4/5. Please review the material and try again.";
-    }
-
-    goToScreen('screen-coc-result');
-  }
-
-  function resetCocQuiz() {
-    document.querySelectorAll('input[name^="coc_q_"]').forEach(inp => inp.checked = false);
-    goToScreen('screen-intro-1');
-  }
-
-  // --- H2S SIMULATION LOGIC ---
-  function playVideoWithAudio(videoElement) {
-    if (!videoElement) return;
-    videoElement.muted = false; 
-    let playPromise = videoElement.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.warn("Autoplay with audio was restricted. Playing muted fallback:", error);
-        videoElement.muted = true;
-        videoElement.play();
-      });
-    }
-  }
-
-  function initiateAudioAndProceed(targetScreen) {
-    goToScreen(targetScreen);
-  }
-
-  function goToScreen(screenId) {
-    // Stop the background timer if the user presses the Home button mid-question
-    clearInterval(timerInterval); 
-
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.getElementById(screenId).classList.add('active');
-    
-    // Manage intro video
-    if (screenId !== 'screen-intro-2') {
-      introVideo.pause();
-    } else {
-      introVideoSource.src = introVideoSrc;
-      introVideo.load();
-      playVideoWithAudio(introVideo);
-    }
-
-    // Manage feedback video
-    if (screenId !== 'screen-feedback') {
-      fVideo.pause();
-    }
-  }
+  ];
 
   function startQuestion(indexNumber) {
     currentQuestionIndex = indexNumber - 1;
-    const data = quizData[currentQuestionIndex];
+    if(currentQuestionIndex >= quizData.length) { goToScreen('screen-final'); return; }
     
-    qImage.src = data.imageSrc;
+    const data = quizData[currentQuestionIndex];
+    qImage.src = data.imageSrc || "";
     qText.textContent = `Q${indexNumber}: ${data.question}`;
     
     qChoices.innerHTML = '';
@@ -798,21 +762,13 @@
     timerText.textContent = timeLeft;
     timerFill.style.width = '100%';
     timerFill.style.background = '#ffffff';
-
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
       timeLeft--;
       timerText.textContent = timeLeft;
-      
-      const percentage = (timeLeft / TIME_LIMIT) * 100;
-      timerFill.style.width = `${percentage}%`;
-
+      timerFill.style.width = `${(timeLeft / TIME_LIMIT) * 100}%`;
       if (timeLeft <= 5) { timerFill.style.background = '#ff4d4d'; }
-
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-        submitAnswer(false, true); 
-      }
+      if (timeLeft <= 0) { submitAnswer(false, true); }
     }, 1000);
   }
 
@@ -823,38 +779,35 @@
     if (isCorrect) {
       feedbackStatus.textContent = 'Correct';
       feedbackStatus.style.color = '#a3e635';
-    } else if (isTimeout) {
-      feedbackStatus.textContent = "Time's Up";
-      feedbackStatus.style.color = '#ff4d4d';
     } else {
-      feedbackStatus.textContent = 'Incorrect';
+      feedbackStatus.textContent = isTimeout ? "Time's Up" : 'Incorrect';
       feedbackStatus.style.color = '#ff4d4d';
     }
 
     fExplanation.innerHTML = `<strong>Explanation:</strong> ${data.explanation}`;
     
-    fVideoSource.src = data.videoSrc;
-    fVideo.load();
-    playVideoWithAudio(fVideo);
-
-    if (currentQuestionIndex >= quizData.length - 1) {
-      btnNextQuestion.textContent = "Finish Challenge";
-    } else {
-      btnNextQuestion.textContent = "Next Question";
+    if(data.videoSrc) {
+      fVideoSource.src = data.videoSrc;
+      fVideo.load();
+      fVideo.muted = false;
+      fVideo.play().catch(e => { fVideo.muted = true; fVideo.play(); });
     }
 
+    btnNextQuestion.textContent = (currentQuestionIndex >= quizData.length - 1) ? "Finish Challenge" : "Next Question";
     goToScreen('screen-feedback');
   }
 
   function nextQuestion() {
-    if (currentQuestionIndex >= quizData.length - 1) {
-      goToScreen('screen-final');
-    } else {
-      startQuestion(currentQuestionIndex + 2); 
-    }
+    if (currentQuestionIndex >= quizData.length - 1) goToScreen('screen-final');
+    else startQuestion(currentQuestionIndex + 2);
   }
 
-  // Initialize Code of Conduct Quiz DOM elements
+  function goToScreen(screenId) {
+    clearInterval(timerInterval); 
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+  }
+
   buildCocQuiz();
 
 </script>
