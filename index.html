@@ -331,12 +331,19 @@
 
   <!-- CODE OF CONDUCT RESULTS SCREEN -->
   <div id="screen-coc-result" class="screen">
-    <div style="margin: auto 0; text-align: center;">
-      <h1 id="coc-res-title"></h1>
-      <p id="coc-res-score" style="font-size: 1.3rem; font-weight: 700; color: #fff;"></p>
-      <p id="coc-res-msg"></p>
+    <div class="content-scroll" style="max-height: 500px;">
+      <div style="text-align: center; margin-bottom: 25px;">
+        <h1 id="coc-res-title"></h1>
+        <p id="coc-res-score" style="font-size: 1.3rem; font-weight: 700; color: #fff; margin: 0;"></p>
+        <p id="coc-res-msg" style="margin-top: 10px;"></p>
+      </div>
+      
+      <h2>Quiz Review</h2>
+      <div id="coc-review-list">
+          <!-- Populated dynamically by JS -->
+      </div>
     </div>
-    <button class="btn-primary" onclick="resetCocQuiz()">Return Home</button>
+    <button class="btn-primary" style="margin-top: 15px;" onclick="resetCocQuiz()">Return Home</button>
   </div>
 
   <!-- EVENT 2: Objectives -->
@@ -449,7 +456,6 @@
     <button class="btn-home" onclick="goToScreen('screen-intro-1')">🏠 Home</button>
     <h1>Mission Briefing</h1>
     <div class="video-container-outer">
-      <!-- Fixed Video src directly applied in JS -->
       <video id="intro-video" playsinline preload="auto"></video>
     </div>
     <p>You are about to enter an H2S emergency situation at an Aramco facility. You have 20 seconds per question to make life-critical decisions based on your training.</p>
@@ -486,7 +492,6 @@
     </div>
 
     <div class="video-container-outer">
-       <!-- Fixed Video src directly applied in JS -->
       <video id="f-video" playsinline preload="auto"></video>
     </div>
     
@@ -527,8 +532,8 @@
     'screen-practice-1': 40,
     'screen-practice-2': 55,
     'screen-intro-2': 70,
-    'screen-question': 75, // Base for sim
-    'screen-feedback': 80, // Base for sim
+    'screen-question': 75,
+    'screen-feedback': 80, 
     'screen-final': 100
   };
 
@@ -536,9 +541,7 @@
       const fill = document.getElementById('global-progress-fill');
       let pct = screenProgressMap[screenId] || 0;
       
-      // Dynamic adjustments during the simulation loop
       if (screenId === 'screen-question' || screenId === 'screen-feedback') {
-          // Progress scales from 75% to 95% during the 5 questions
           const simBase = 75;
           const simMax = 95;
           const progressStep = (simMax - simBase) / quizData.length;
@@ -562,7 +565,6 @@
     if (screenId !== 'screen-intro-2') {
       if(introVideo) introVideo.pause();
     } else {
-      // Direct src assignment fixes browser loading issues
       introVideo.src = introVideoSrc;
       introVideo.load();
       playVideoWithAudio(introVideo);
@@ -586,10 +588,75 @@
     }
   }
 
-  // --- CODE OF CONDUCT QUIZ DATA ---
+  // --- FULL 5-QUESTION CODE OF CONDUCT QUIZ DATA ---
   const cocQuizData = [
-    { type: "radio", question: "1. True or False: Managers are responsible for communicating, promoting, and monitoring compliance...", options: ["True", "False"], correctAnswers: ["True"] },
-    { type: "radio", question: "2. True or False: Failure to read this Code of Conduct does not excuse compliance.", options: ["True", "False"], correctAnswers: ["True"] }
+    {
+      type: "radio",
+      question: "1. True or False: Managers are responsible for communicating, promoting, and monitoring compliance with the requirements of this Code of Conduct within their area of responsibility.",
+      options: ["True", "False"],
+      correctAnswers: ["True"]
+    },
+    {
+      type: "radio",
+      question: "2. True or False: Failure to read this Code of Conduct or sign the acknowledgment form does not excuse an HPSI employee from compliance with this Code of Conduct.",
+      options: ["True", "False"],
+      correctAnswers: ["True"]
+    },
+    {
+      type: "checkbox",
+      question: "3. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
+      options: [
+        "Booking flights", 
+        "Safeguarding all personal data", 
+        "Respecting human and labor rights", 
+        "Avoiding conflicts of interest", 
+        "Planning social gatherings", 
+        "Following export controls and sanctions"
+      ],
+      correctAnswers: [
+        "Safeguarding all personal data", 
+        "Respecting human and labor rights", 
+        "Avoiding conflicts of interest", 
+        "Following export controls and sanctions"
+      ]
+    },
+    {
+      type: "checkbox",
+      question: "4. Choose all responses mentioned in the Code of Conduct as part of your responsibilities (more than one):",
+      options: [
+        "Avoiding insider trading and money laundering", 
+        "Mailing holiday cards", 
+        "Abiding by fair competition practices", 
+        "Avoiding gifts that could mean undue business influence", 
+        "Safeguarding company property and information", 
+        "Participating in prize raffles"
+      ],
+      correctAnswers: [
+        "Avoiding insider trading and money laundering", 
+        "Abiding by fair competition practices", 
+        "Avoiding gifts that could mean undue business influence", 
+        "Safeguarding company property and information"
+      ]
+    },
+    {
+      type: "checkbox",
+      question: "5. Choose all answers that were mentioned (more than one) Your duties as an employee include:",
+      options: [
+        "Good judgement", 
+        "Care", 
+        "Charisma", 
+        "Consideration", 
+        "Familiarity with your duties", 
+        "Performing your duties"
+      ],
+      correctAnswers: [
+        "Good judgement", 
+        "Care", 
+        "Consideration", 
+        "Familiarity with your duties", 
+        "Performing your duties"
+      ]
+    }
   ];
 
   function buildCocQuiz() {
@@ -620,8 +687,72 @@
     });
   }
 
-  function submitCocQuiz() { goToScreen('screen-coc-result'); }
-  function resetCocQuiz() { goToScreen('screen-intro-1'); }
+  function submitCocQuiz() {
+    let score = 0;
+    let allAnswered = true;
+    let reviewHTML = '';
+
+    cocQuizData.forEach((q, qIndex) => {
+      const inputs = document.querySelectorAll(`input[name="coc_q_${qIndex}"]:checked`);
+      if (inputs.length === 0) { allAnswered = false; }
+      
+      const selectedValues = Array.from(inputs).map(inp => inp.value);
+      let isCorrect = false;
+      
+      if (q.type === 'radio') {
+        if (selectedValues[0] === q.correctAnswers[0]) { isCorrect = true; score++; }
+      } else if (q.type === 'checkbox') {
+        isCorrect = selectedValues.length === q.correctAnswers.length && 
+                          selectedValues.every(val => q.correctAnswers.includes(val));
+        if (isCorrect) score++;
+      }
+
+      // Build Review Items for CoC Quiz
+      const userAnsText = selectedValues.length > 0 ? selectedValues.join(', ') : 'None selected';
+      const correctAnsText = q.correctAnswers.join(', ');
+      const borderColor = isCorrect ? '#a3e635' : '#ff4d4d';
+      const statusText = isCorrect ? '<span style="color:#a3e635;">Correct</span>' : '<span style="color:#ff4d4d;">Incorrect</span>';
+
+      reviewHTML += `
+        <div class="review-item" style="border-left: 5px solid ${borderColor};">
+          <div class="review-q">Q${qIndex + 1}: ${statusText}</div>
+          <div class="review-ans" style="margin-bottom: 8px;"><strong>Your Answer:</strong> ${userAnsText}</div>
+          ${!isCorrect ? `<div class="review-expl" style="color: #e2e8f0;"><strong>Correct Answer:</strong> ${correctAnsText}</div>` : ''}
+        </div>
+      `;
+    });
+
+    if (!allAnswered) {
+      alert("Please answer all questions before submitting.");
+      return;
+    }
+
+    // Inject Review Data
+    document.getElementById('coc-review-list').innerHTML = reviewHTML;
+
+    // Handle Scoring Display
+    const title = document.getElementById('coc-res-title');
+    const scoreText = document.getElementById('coc-res-score');
+    const msg = document.getElementById('coc-res-msg');
+
+    scoreText.innerText = `Score: ${score} / 5`;
+    if (score >= 4) {
+      title.innerText = "Passed!";
+      title.style.color = '#a3e635'; 
+      msg.innerText = "Congratulations, you have passed the Code of Conduct Quiz.";
+    } else {
+      title.innerText = "Failed";
+      title.style.color = '#ff4d4d'; 
+      msg.innerText = "You did not achieve the minimum passing score of 4/5. Please review the material and try again.";
+    }
+
+    goToScreen('screen-coc-result');
+  }
+
+  function resetCocQuiz() {
+    document.querySelectorAll('input[name^="coc_q_"]').forEach(inp => inp.checked = false);
+    goToScreen('screen-intro-1');
+  }
 
   // --- PRACTICE 1: CATEGORIZATION LOGIC ---
   const p1Facts = [
@@ -914,7 +1045,6 @@
     clearInterval(timerInterval);
     const data = quizData[currentQuestionIndex];
 
-    // Log for review
     if (isCorrect) simScore++;
     simReviewData.push({
         qNum: currentQuestionIndex + 1,
@@ -935,7 +1065,6 @@
     fExplanation.innerHTML = `<strong>Explanation:</strong> ${data.explanation}`;
     
     if(data.videoSrc) {
-      // Direct src assignment fixes browser loading issues
       fVideo.src = data.videoSrc;
       fVideo.load();
       playVideoWithAudio(fVideo);
